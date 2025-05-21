@@ -1,24 +1,23 @@
-
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { ShoppingCart, User, Search, X, Menu, Pill } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useCart } from '@/contexts/CartContext';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ShoppingCart, User, Search, X, Menu, Pill } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useCart } from "@/contexts/CartContext";
 
 const Header: React.FC = () => {
   const { isAuthenticated, user, logout } = useAuth();
   const { getItemCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim()) {
       navigate(`/products?search=${encodeURIComponent(searchTerm)}`);
-      setSearchTerm('');
+      setSearchTerm("");
     }
   };
 
@@ -33,11 +32,16 @@ const Header: React.FC = () => {
           {/* Logo and Brand */}
           <Link to="/" className="flex items-center space-x-2">
             <Pill className="h-6 w-6 text-pharmacy-blue" />
-            <span className="text-xl font-bold text-pharmacy-blue">MediCart</span>
+            <span className="text-xl font-bold text-pharmacy-blue">
+              MediCart
+            </span>
           </Link>
 
           {/* Search Bar - Hidden on mobile */}
-          <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md mx-4">
+          <form
+            onSubmit={handleSearch}
+            className="hidden md:flex flex-1 max-w-md mx-4"
+          >
             <div className="relative w-full">
               <Input
                 type="text"
@@ -52,13 +56,20 @@ const Header: React.FC = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-4">
-            <Link to="/products" className="text-pharmacy-text hover:text-pharmacy-blue transition-colors">
+            <Link
+              to="/products"
+              className="text-pharmacy-text hover:text-pharmacy-blue transition-colors"
+            >
               Products
             </Link>
             {isAuthenticated ? (
               <div className="flex items-center space-x-4">
                 <span className="text-pharmacy-text">Hi, {user?.name}</span>
-                <Button variant="ghost" onClick={logout} className="text-pharmacy-text hover:text-pharmacy-blue">
+                <Button
+                  variant="ghost"
+                  onClick={logout}
+                  className="text-pharmacy-text hover:text-pharmacy-blue"
+                >
                   Logout
                 </Button>
               </div>
@@ -95,8 +106,17 @@ const Header: React.FC = () => {
                 </span>
               )}
             </Link>
-            <Button variant="ghost" size="icon" className="h-9 w-9" onClick={toggleMenu}>
-              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9"
+              onClick={toggleMenu}
+            >
+              {isMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </Button>
           </div>
         </div>
@@ -117,8 +137,8 @@ const Header: React.FC = () => {
               </div>
             </form>
             <nav className="flex flex-col space-y-4">
-              <Link 
-                to="/products" 
+              <Link
+                to="/products"
                 className="text-pharmacy-text hover:text-pharmacy-blue transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -127,20 +147,20 @@ const Header: React.FC = () => {
               {isAuthenticated ? (
                 <>
                   <span className="text-pharmacy-text">Hi, {user?.name}</span>
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     onClick={() => {
                       logout();
                       setIsMenuOpen(false);
-                    }} 
+                    }}
                     className="justify-start p-0 text-pharmacy-text hover:text-pharmacy-blue"
                   >
                     Logout
                   </Button>
                 </>
               ) : (
-                <Link 
-                  to="/login" 
+                <Link
+                  to="/login"
                   className="flex items-center space-x-2 text-pharmacy-text hover:text-pharmacy-blue transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
